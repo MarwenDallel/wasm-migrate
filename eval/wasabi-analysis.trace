@@ -1,0 +1,194 @@
+Initializating Wasabi analysis... analysis.js:5:9
+Object { func: 1, instr: -1 } begin function analysis.js:60:13
+Object { func: 1, instr: 0 } global.get global # 0 value = 0 analysis.js:167:13
+Object { func: 1, instr: 1 } i32.const value = 2 analysis.js:120:13
+Object { func: 1, instr: 2 } i32.eq first = 0  second = 2 result = 0 analysis.js:128:13
+Object { func: 1, instr: 3 } if, condition = false analysis.js:21:13
+Object { func: 1, instr: 22 } begin block analysis.js:60:13
+Object { func: 1, instr: 23 } global.get global # 0 value = 0 analysis.js:167:13
+Object { func: 1, instr: 24 } i32.const value = 2 analysis.js:120:13
+Object { func: 1, instr: 25 } i32.eq first = 0  second = 2 result = 0 analysis.js:128:13
+Object { func: 1, instr: 26 } if, condition = false analysis.js:21:13
+Object { func: 1, instr: 38 } local.get local # 3 value = 0 analysis.js:163:13
+Object { func: 1, instr: 39 } i32.const value = 1 analysis.js:120:13
+Object { func: 1, instr: 40 } global.get global # 0 value = 0 analysis.js:167:13
+Object { func: 1, instr: 41 } select, condition = false first = 0 second = 1 analysis.js:82:13
+Object { func: 1, instr: 42 } local.set local # 3 value = 1 analysis.js:163:13
+Object { func: 1, instr: 43 } begin loop analysis.js:60:13
+Object { func: 1, instr: 44 } local.get local # 0 value = 46 analysis.js:163:13
+Object { func: 1, instr: 45 } global.get global # 0 value = 0 analysis.js:167:13
+Object { func: 1, instr: 46 } i32.const value = 2 analysis.js:120:13
+Object { func: 1, instr: 47 } i32.eq first = 0  second = 2 result = 0 analysis.js:128:13
+Object { func: 1, instr: 48 } i32.or first = 46  second = 0 result = 46 analysis.js:128:13
+Object { func: 1, instr: 49 } if, condition = false analysis.js:21:13
+Object { func: 1, instr: 49 } begin if analysis.js:60:13
+Object { func: 1, instr: 50 } global.get global # 0 value = 0 analysis.js:167:13
+Object { func: 1, instr: 51 } i32.eqz input = 0 result = 1 analysis.js:124:13
+Object { func: 1, instr: 52 } if, condition = true analysis.js:21:13
+Object { func: 1, instr: 52 } begin if analysis.js:60:13
+Object { func: 1, instr: 53 } local.get local # 3 value = 1 analysis.js:163:13
+Object { func: 1, instr: 54 } local.set local # 2 value = 1 analysis.js:163:13
+Object { func: 1, instr: 55 } local.get local # 1 value = 0 analysis.js:163:13
+Object { func: 1, instr: 56 } local.set local # 3 value = 0 analysis.js:163:13
+Object { func: 1, instr: 57 } local.get local # 1 value = 0 analysis.js:163:13
+Object { func: 1, instr: 58 } local.get local # 2 value = 1 analysis.js:163:13
+Object { func: 1, instr: 59 } i32.add first = 0  second = 1 result = 1 analysis.js:128:13
+Object { func: 1, instr: 60 } local.set local # 1 value = 1 analysis.js:163:13
+Object { func: 1, instr: 61 } local.get local # 0 value = 46 analysis.js:163:13
+Object { func: 1, instr: 62 } i32.const value = 1 analysis.js:120:13
+Object { func: 1, instr: 63 } i32.sub first = 46  second = 1 result = 45 analysis.js:128:13
+Object { func: 1, instr: 64 } local.set local # 0 value = 45 analysis.js:163:13
+Object { func: 1, instr: 65 } end if (begin @ Object { func: 1, instr: 52 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 66 } local.get local # 4 value = 0 analysis.js:163:13
+Object { func: 1, instr: 67 } i32.const value = 0 analysis.js:120:13
+Object { func: 1, instr: 68 } global.get global # 0 value = 0 analysis.js:167:13
+Object { func: 1, instr: 69 } select, condition = false first = 0 second = 0 analysis.js:82:13
+Object { func: 1, instr: 70 } i32.eqz input = 0 result = 1 analysis.js:124:13
+Object { func: 1, instr: 71 } if, condition = true analysis.js:21:13
+Object { func: 1, instr: 71 } begin if analysis.js:60:13
+Object { func: 1, instr: 72 } i32.const value = 1000 analysis.js:120:13
+Object { func: 1, instr: 73 } direct call to func # 0 args = Array [ 1000 ]
+sleep...fibonacci.html: 34: 25
+Int32Array(16384) [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, … ]
+fibonacci.html:40:25
+Object { func: 2, instr: -1 } begin function analysis.js:60:13
+Object { func: 2, instr: 0 } i32.const value = 1 analysis.js:120:13
+Object { func: 2, instr: 1 } global.set global # 0 value = 1 analysis.js:167:13
+Object { func: 2, instr: 2 } local.get local # 0 value = 48 analysis.js:163:13
+Object { func: 2, instr: 3 } global.set global # 1 value = 48 analysis.js:167:13
+Object { func: 2, instr: 4 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 2, instr: 5 } i32.load value = 56  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 2, instr: 6 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 2, instr: 7 } i32.load value = 1024  from = Object { addr: 48, offset: 4, align: 2 } analysis.js:141:13
+Object { func: 2, instr: 8 } i32.gt_u first = 56  second = 1024 result = 0 analysis.js:128:13
+Object { func: 2, instr: 9 } if, condition = false analysis.js:21:13
+Object { func: 2, instr: -1 } implicit return, values = Array [] analysis.js:111:13
+Object { func: 2, instr: 12 } end function (begin @ Object { func: 2, instr: -1 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 73 } call result = Array [] analysis.js:107:13
+Object { func: 1, instr: 74 } i32.const value = 0 analysis.js:120:13
+Object { func: 1, instr: 75 } global.get global # 0 value = 1 analysis.js:167:13
+Object { func: 1, instr: 76 } i32.const value = 1 analysis.js:120:13
+Object { func: 1, instr: 77 } i32.eq first = 1  second = 1 result = 1 analysis.js:128:13
+Object { func: 1, instr: 78 } br_if, (conditionally) to label 3 (== Object { func: 1, instr: 93 } ), condition = true analysis.js:36:13
+Object { func: 1, instr: 80 } end if (begin @ Object { func: 1, instr: 71 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 84 } end if (begin @ Object { func: 1, instr: 49 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 85 } end loop (begin @ Object { func: 1, instr: 43 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 93 } end block (begin @ Object { func: 1, instr: 22 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 94 } local.set local # 2 value = 0 analysis.js:163:13
+Object { func: 1, instr: 95 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 96 } i32.load value = 56  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 97 } local.get local # 2 value = 0 analysis.js:163:13
+Object { func: 1, instr: 98 } i32.store value = 0 to = Object { addr: 56, offset: 0, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 99 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 100 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 101 } i32.load value = 56  from = Object { addr: 48, offset: 0, align: 2 }
+Object { func: 1, instr: 102 } i32.const value = 4 analysis.js: 120: 13
+Object { func: 1, instr: 103 } i32.add first = 56  second = 4 result = 60 analysis.js:128:13
+Object { func: 1, instr: 104 } i32.store value = 60 to = Object { addr: 48, offset: 0, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 105 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 106 } i32.load value = 60  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 107 } local.tee local # 2 value = 60 analysis.js:163:13
+Object { func: 1, instr: 108 } local.get local # 0 value = 45 analysis.js:163:13
+Object { func: 1, instr: 109 } i32.store value = 45 to = Object { addr: 60, offset: 0, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 110 } local.get local # 2 value = 60 analysis.js:163:13
+Object { func: 1, instr: 111 } local.get local # 3 value = 0 analysis.js:163:13
+Object { func: 1, instr: 112 } i32.store value = 0 to = Object { addr: 60, offset: 4, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 113 } local.get local # 2 value = 60 analysis.js:163:13
+Object { func: 1, instr: 114 } local.get local # 1 value = 1 analysis.js:163:13
+Object { func: 1, instr: 115 } i32.store value = 1 to = Object { addr: 60, offset: 8, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 116 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 117 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 118 } i32.load value = 60  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 119 } i32.const value = 12 analysis.js:120:13
+Object { func: 1, instr: 120 } i32.add first = 60  second = 12 result = 72 analysis.js:128:13
+Object { func: 1, instr: 121 } i32.store value = 72 to = Object { addr: 48, offset: 0, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 122 } i32.const value = 0 analysis.js:120:13
+Object { func: 1, instr: -1 } implicit return, values = Array [ 0 ] analysis.js:111:13
+Object { func: 1, instr: 123 } end function (begin @ Object { func: 1, instr: -1 } , if begin @ undefined ) analysis.js:65:13
+stack unwound fibonacci.html:78:17
+Object { func: 3, instr: -1 } begin function analysis.js:60:13
+Object { func: 3, instr: 0 } i32.const value = 0 analysis.js:120:13
+Object { func: 3, instr: 1 } global.set global # 0 value = 0 analysis.js:167:13
+Object { func: 3, instr: 2 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 3, instr: 3 } i32.load value = 72  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 3, instr: 4 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 3, instr: 5 } i32.load value = 1024  from = Object { addr: 48, offset: 4, align: 2 } analysis.js:141:13
+Object { func: 3, instr: 6 } i32.gt_u first = 72  second = 1024 result = 0 analysis.js:128:13
+Object { func: 3, instr: 7 } if, condition = false analysis.js:21:13
+Object { func: 3, instr: -1 } implicit return, values = Array []
+Object { func: 3, instr: 10 } end function (begin @ Object { func: 3, instr: -1 }, if begin @ undefined ) analysis.js:65:13
+timeout ended, starting to rewind the stack fibonacci.html:45:27
+Object { func: 4, instr: -1 } begin function analysis.js:60:13
+Object { func: 4, instr: 0 } i32.const value = 2 analysis.js:120:13
+Object { func: 4, instr: 1 } global.set global # 0 value = 2 analysis.js:167:13
+Object { func: 4, instr: 2 } local.get local # 0 value = 48 analysis.js:163:13
+Object { func: 4, instr: 3 } global.set global # 1 value = 48 analysis.js:167:13
+Object { func: 4, instr: 4 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 4, instr: 5 } i32.load value = 72  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 4, instr: 6 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 4, instr: 7 } i32.load value = 1024  from = Object { addr: 48, offset: 4, align: 2 } analysis.js:141:13
+Object { func: 4, instr: 8 } i32.gt_u first = 72  second = 1024 result = 0 analysis.js:128:13
+Object { func: 4, instr: 9 } if, condition = false analysis.js:21:13
+Object { func: 4, instr: -1 } implicit return, values = Array [] analysis.js:111:13
+Object { func: 4, instr: 12 } end function (begin @ Object { func: 4, instr: -1 }, if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: -1 } begin function analysis.js:60:13
+Object { func: 1, instr: 0 } global.get global # 0 value = 2 analysis.js:167:13
+Object { func: 1, instr: 1 } i32.const value = 2 analysis.js:120:13
+Object { func: 1, instr: 2 } i32.eq first = 2  second = 2 result = 1 analysis.js:128:13
+Object { func: 1, instr: 3 } if, condition = true analysis.js:21:13
+Object { func: 1, instr: 3 } begin if analysis.js:60:13
+Object { func: 1, instr: 4 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 5 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 6 } i32.load value = 72  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 7 } i32.const value = 12 analysis.js:120:13
+Object { func: 1, instr: 8 } i32.sub first = 72  second = 12 result = 60 analysis.js:128:13
+Object { func: 1, instr: 9 } i32.store value = 60 to = Object { addr: 48, offset: 0, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 10 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 11 } i32.load value = 60  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 25 } i32.eq first = 2  second = 2 result = 1 analysis.js:128:13
+Object { func: 1, instr: 26 } if, condition = true analysis.js:21:13
+Object { func: 1, instr: 26 } begin if analysis.js:60:13
+Object { func: 1, instr: 27 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 28 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 29 } i32.load value = 60  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 30 } i32.const value = 4 analysis.js:120:13
+Object { func: 1, instr: 31 } i32.sub first = 60  second = 4 result = 56 analysis.js:128:13
+Object { func: 1, instr: 32 } i32.store value = 56 to = Object { addr: 48, offset: 0, align: 2 } analysis.js:145:13
+Object { func: 1, instr: 33 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 1, instr: 34 } i32.load value = 56  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 35 } i32.load value = 0  from = Object { addr: 56, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 1, instr: 36 } local.set local # 4 value = 0 analysis.js:163:13
+Object { func: 1, instr: 37 } end if (begin @ Object { func: 1, instr: 26 } , if begin @ undefined ) analysis.js:65:13
+Object { func: 1, instr: 38 } local.get local # 3 value = 0 analysis.js:163:13
+Object { func: 1, instr: 39 } i32.const value = 1 analysis.js:120:13
+Object { func: 1, instr: 40 } global.get global # 0 value = 2 analysis.js:167:13
+Object { func: 1, instr: 41 } select, condition = false first = 0 second = 1 analysis.js:82:13
+Object { func: 1, instr: 42 } local.set local # 3 value = 0 analysis.js:163:13
+Object { func: 1, instr: 43 } begin loop analysis.js:60:13
+Object { func: 1, instr: 44 } local.get local # 0 value = 45 analysis.js:163:13
+Object { func: 1, instr: 45 } global.get global # 0 value = 2 analysis.js:167:13
+Object { func: 1, instr: 46 } i32.const value = 2 analysis.js:120:13
+Object { func: 1, instr: 47 } i32.eq first = 2  second = 2 result = 1 analysis.js:128:13
+Object { func: 1, instr: 48 } i32.or first = 45  second = 1 result = 45 analysis.js:128:13
+Object { func: 1, instr: 49 } if, condition = false analysis.js:21:13
+Object { func: 1, instr: 49 } begin if analysis.js:60:13
+Object { func: 1, instr: 50 } global.get global # 0 value = 2 analysis.js:167:13
+Object { func: 1, instr: 51 } i32.eqz input = 2 result = 0 analysis.js:124:13
+Object { func: 1, instr: 52 } if, condition = false analysis.js:21:13
+Object { func: 1, instr: 66 } local.get local # 4 value = 0 analysis.js:163:13
+Object { func: 1, instr: 67 } i32.const value = 0 analysis.js:120:13
+Object { func: 1, instr: 68 } global.get global # 0 value = 2 analysis.js:167:13
+Object { func: 1, instr: 69 } select, condition = false first = 0 second = 0 analysis.js:82:13
+Object { func: 1, instr: 70 } i32.eqz input = 0 result = 1 analysis.js:124:13
+...resume fibonacci.html: 53: 25
+Object { func: 5, instr: -1 } begin function analysis.js:60:13
+Object { func: 5, instr: 0 } i32.const value = 0 analysis.js:120:13
+Object { func: 5, instr: 1 } global.set global # 0 value = 0 analysis.js:167:13
+Object { func: 5, instr: 2 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 5, instr: 3 } i32.load value = 56  from = Object { addr: 48, offset: 0, align: 2 } analysis.js:141:13
+Object { func: 5, instr: 4 } global.get global # 1 value = 48 analysis.js:167:13
+Object { func: 5, instr: 5 } i32.load value = 1024  from = Object { addr: 48, offset: 4, align: 2 } analysis.js:141:13
+Object { func: 5, instr: 6 } i32.gt_u first = 56  second = 1024 result = 0 analysis.js:128:13
+Object { func: 5, instr: 7 } if, condition = false analysis.js:21:13
+Object { func: 5, instr: -1 } implicit return, values = Array [] analysis.js:111:13
+Object { func: 5, instr: 10 } end function (begin @ Object { func: 5, instr: -1 }, if begin @ undefined ) analysis.js:65:13

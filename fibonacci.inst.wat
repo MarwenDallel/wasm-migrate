@@ -55,7 +55,7 @@
         local.tee 0
         i32.const 4
         call 3
-        i32.const 20000
+        i32.const 1000
         call 0
         br 0 (;@2;)
       end
@@ -74,4 +74,4 @@
     i32.store)
   (memory (;0;) 1)
   (export "fibonacci" (func 1))
-  (export "mem" (memory 0)))
+  (export "memory" (memory 0)))

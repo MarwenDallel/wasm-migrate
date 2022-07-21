@@ -4,6 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "binaryen": "^109.0.0",
     "readline-sync": "^1.4.10"
+  },
+  "scripts": {
+    "start": "node glue-code.mjs",
+    "test": "node utils/test.mjs"
   }
 }

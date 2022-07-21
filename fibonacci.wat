@@ -1,6 +1,5 @@
 (module
   (import "env" "sleep" (func $sleep (param i32)))
-  (import "env" "save" (func $save))
   (type $t0 (func (param i32) (result i32)))
   (func $fibonacci (type $t0) (param $index i32) (result i32)
     (local $fibn i32) (local $fibn1 i32) (local $fibn2 i32) (local $n i32)
