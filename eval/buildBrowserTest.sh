@@ -7,7 +7,7 @@
 name=${1%.*}
 analysis=${2%.*}
 
-wat2wasm ${name}.wat
+wat2wasm --debug-names ${name}.wat
 
 wasabi ${name}.wasm
 

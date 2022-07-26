@@ -1,0 +1,191 @@
+(module
+  (type (;0;) (func (param i32)))
+  (type (;1;) (func))
+  (type (;2;) (func (param i32) (result i32)))
+  (type (;3;) (func (result i32)))
+  (import "env" "sleep" (func $sleep (type 0)))
+  (func (;1;) (type 2) (param i32) (result i32)
+    (local i32 i32 i32 i32)
+    global.get $__asyncify_state
+    i32.const 2
+    i32.eq
+    if  ;; label = @1
+      global.get $__asyncify_data
+      global.get $__asyncify_data
+      i32.load
+      i32.const 12
+      i32.sub
+      i32.store
+      global.get $__asyncify_data
+      i32.load
+      local.tee 1
+      i32.load
+      local.set 0
+      local.get 1
+      i32.load offset=4
+      local.set 3
+      local.get 1
+      i32.load offset=8
+      local.set 1
+    end
+    block (result i32)  ;; label = @1
+      global.get $__asyncify_state
+      i32.const 2
+      i32.eq
+      if  ;; label = @2
+        global.get $__asyncify_data
+        global.get $__asyncify_data
+        i32.load
+        i32.const 4
+        i32.sub
+        i32.store
+        global.get $__asyncify_data
+        i32.load
+        i32.load
+        local.set 4
+      end
+      local.get 3
+      i32.const 1
+      global.get $__asyncify_state
+      select
+      local.set 3
+      loop  ;; label = @2
+        local.get 0
+        global.get $__asyncify_state
+        i32.const 2
+        i32.eq
+        i32.or
+        if  ;; label = @3
+          global.get $__asyncify_state
+          i32.eqz
+          if  ;; label = @4
+            local.get 3
+            local.set 2
+            local.get 1
+            local.set 3
+            local.get 1
+            local.get 2
+            i32.add
+            local.set 1
+            local.get 0
+            i32.const 1
+            i32.sub
+            local.set 0
+          end
+          local.get 4
+          i32.const 0 
+          global.get $__asyncify_state ;; get __asyncify_state
+          select
+          i32.eqz ;; if __asyncify_state == 0 (normal)
+          if  ;; label = @4
+            i32.const 1000
+            call $sleep ;; starts unwinding
+            i32.const 0
+            global.get $__asyncify_state
+            i32.const 1 
+            i32.eq ;; if __asyncify_state == 1 (unwinding)
+            br_if 3 (;@1;) ;; pop 4 levels
+            drop
+          end
+          global.get $__asyncify_state
+          i32.eqz
+          br_if 1 (;@2;)
+        end
+      end
+      global.get $__asyncify_state
+      i32.eqz
+      if  ;; label = @2
+        local.get 1
+        return
+      end
+      unreachable
+    end
+    local.set 2
+    global.get $__asyncify_data
+    i32.load
+    local.get 2
+    i32.store
+    global.get $__asyncify_data
+    global.get $__asyncify_data
+    i32.load
+    i32.const 4
+    i32.add
+    i32.store
+    global.get $__asyncify_data
+    i32.load
+    local.tee 2
+    local.get 0
+    i32.store
+    local.get 2
+    local.get 3
+    i32.store offset=4
+    local.get 2
+    local.get 1
+    i32.store offset=8
+    global.get $__asyncify_data
+    global.get $__asyncify_data
+    i32.load
+    i32.const 12
+    i32.add
+    i32.store
+    i32.const 0)
+  (func $start_unwind (type 0) (param $DATA_ADDR i32)
+    i32.const 1
+    global.set $__asyncify_state ;; set __asyncify_state to 1 (unwinding)
+    local.get $DATA_ADDR ;; get pointer to start of data structure (48)
+    global.set $__asyncify_data ;; save it in global
+    global.get $__asyncify_data ;; get pointer to start of data structure
+    i32.load ;; load the stack location (56)
+    global.get $__asyncify_data ;; get pointer to start of data structure
+    i32.load offset=4 ;; load the end of stack location (1024)
+    i32.gt_u ;; check if we still have space in allocated memory region (56 < 1024)
+    if  ;; label = @1
+      unreachable
+    end)
+  (func $stop_unwind (type 1)
+    i32.const 0
+    global.set $__asyncify_state
+    global.get $__asyncify_data
+    i32.load
+    global.get $__asyncify_data
+    i32.load offset=4
+    i32.gt_u
+    if  ;; label = @1
+      unreachable
+    end)
+  (func $start_rewind (type 0) (param $DATA_ADDR i32)
+    i32.const 2
+    global.set $__asyncify_state
+    local.get $DATA_ADDR
+    global.set $__asyncify_data
+    global.get $__asyncify_data
+    i32.load
+    global.get $__asyncify_data
+    i32.load offset=4
+    i32.gt_u
+    if  ;; label = @1
+      unreachable
+    end)
+  (func $stop_rewind (type 1)
+    i32.const 0
+    global.set $__asyncify_state
+    global.get $__asyncify_data
+    i32.load
+    global.get $__asyncify_data
+    i32.load offset=4
+    i32.gt_u
+    if  ;; label = @1
+      unreachable
+    end)
+  (func $get_state (type 3) (result i32)
+    global.get $__asyncify_state)
+  (memory (;0;) 1)
+  (global $__asyncify_state (mut i32) (i32.const 0))
+  (global $__asyncify_data (mut i32) (i32.const 0))
+  (export "fibonacci" (func 1))
+  (export "memory" (memory 0))
+  (export "asyncify_start_unwind" (func $start_unwind))
+  (export "asyncify_stop_unwind" (func $stop_unwind))
+  (export "asyncify_start_rewind" (func $start_rewind))
+  (export "asyncify_stop_rewind" (func $stop_rewind))
+  (export "asyncify_get_state" (func $get_state )))

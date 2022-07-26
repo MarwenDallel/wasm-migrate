@@ -2,6 +2,37 @@
  * Wasabi analysis that logs every invocation of every hook.
  */
 
+const log = console.log;
+let logData = "";
+
+console.log = function (...data) {
+  data.forEach((d) => {
+    // if d is an array, convert it to a string
+    if (ArrayBuffer.isView(d)) {
+      logData += JSON.stringify(d.slice(0, 20)) + " ";
+    } else {
+      logData += JSON.stringify(d) + " ";
+    }
+  });
+  logData += "\n";
+  log(...data);
+};
+
+const exportLog = function () {
+  // save data to blob file
+  const blob = new Blob(
+    [logData.replace(/\[|\]/g, "").replace(/,/g, " ").replace(/\"/g, "")],
+    {
+      type: "text/plain",
+    }
+  );
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "wasabi-log.txt";
+  a.click();
+};
+
 console.log("Initializating Wasabi analysis...");
 
 Wasabi.analysis = {

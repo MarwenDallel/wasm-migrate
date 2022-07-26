@@ -182,7 +182,7 @@ let Wasabi = {
     WebAssembly.Instance = newInstance;
 }
 
-Wasabi.module.info = {"functions":[{"type":"i|","import":["env","sleep"],"export":[],"locals":"","instrCount":0},{"type":"i|i","import":null,"export":["fibonacci"],"locals":"iiii","instrCount":134},{"type":"i|","import":null,"export":["asyncify_start_unwind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_unwind"],"locals":"","instrCount":11},{"type":"i|","import":null,"export":["asyncify_start_rewind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_rewind"],"locals":"","instrCount":11},{"type":"|i","import":null,"export":["asyncify_get_state"],"locals":"","instrCount":2}],"globals":"ii","start":null,"tableExportName":null,"brTables":[]};
+Wasabi.module.info = {"functions":[{"type":"i|","import":["env","sleep"],"export":[],"locals":"","instrCount":0},{"type":"i|i","import":null,"export":["fibonacci"],"locals":"iiiiiiiiiiiiiiiiiiii","instrCount":209},{"type":"i|","import":null,"export":["asyncify_start_unwind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_unwind"],"locals":"","instrCount":11},{"type":"i|","import":null,"export":["asyncify_start_rewind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_rewind"],"locals":"","instrCount":11},{"type":"|i","import":null,"export":["asyncify_get_state"],"locals":"","instrCount":2}],"globals":"ii","start":null,"tableExportName":null,"brTables":[]};
 
 Wasabi.module.lowlevelHooks = {
     "begin_function": function (func, instr, ) {
@@ -197,20 +197,20 @@ Wasabi.module.lowlevelHooks = {
     "global_get_i": function (func, instr, index, value) {
         Wasabi.analysis.global({func, instr}, "global.get", index, value);
     },
-    "local_get_i": function (func, instr, index, value) {
-        Wasabi.analysis.local({func, instr}, "local.get", index, value);
+    "i32_load": function (func, instr, offset, align, addr, value) {
+        Wasabi.analysis.load({func, instr}, "i32.load", {addr, offset, align}, value);
     },
     "return_i": function (func, instr, result0) {
         Wasabi.analysis.return_({func, instr}, [result0]);
     },
-    "i32_load": function (func, instr, offset, align, addr, value) {
-        Wasabi.analysis.load({func, instr}, "i32.load", {addr, offset, align}, value);
-    },
     "end_function": function (func, instr, ) {
         Wasabi.analysis.end({func, instr}, "function", {func, instr: -1});
     },
-    "i32_eq": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.eq", input0, input1, result0);
+    "local_get_i": function (func, instr, index, value) {
+        Wasabi.analysis.local({func, instr}, "local.get", index, value);
+    },
+    "i32_gt_u": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.gt_u", input0, input1, result0);
     },
     "if": function (func, instr, condition) {
         Wasabi.analysis.if_({func, instr}, condition === 1);
@@ -218,50 +218,56 @@ Wasabi.module.lowlevelHooks = {
     "begin_if": function (func, instr, ) {
         Wasabi.analysis.begin({func, instr}, "if");
     },
-    "begin_block": function (func, instr, ) {
-        Wasabi.analysis.begin({func, instr}, "block");
-    },
-    "i32_gt_u": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.gt_u", input0, input1, result0);
-    },
-    "i32_sub": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.sub", input0, input1, result0);
-    },
-    "i32_store": function (func, instr, offset, align, addr, value) {
-        Wasabi.analysis.store({func, instr}, "i32.store", {addr, offset, align}, value);
-    },
     "unreachable": function (func, instr, ) {
         Wasabi.analysis.unreachable({func, instr}, );
     },
     "end_if": function (func, instr, beginInstr) {
         Wasabi.analysis.end({func, instr}, "if", {func, instr: beginInstr});
     },
-    "local_tee_i": function (func, instr, index, value) {
-        Wasabi.analysis.local({func, instr}, "local.tee", index, value);
-    },
     "return": function (func, instr, ) {
         Wasabi.analysis.return_({func, instr}, []);
+    },
+    "i32_eq": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.eq", input0, input1, result0);
+    },
+    "i32_add": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.add", input0, input1, result0);
+    },
+    "i32_store": function (func, instr, offset, align, addr, value) {
+        Wasabi.analysis.store({func, instr}, "i32.store", {addr, offset, align}, value);
     },
     "local_set_i": function (func, instr, index, value) {
         Wasabi.analysis.local({func, instr}, "local.set", index, value);
     },
-    "end_block": function (func, instr, beginInstr) {
-        Wasabi.analysis.end({func, instr}, "block", {func, instr: beginInstr});
+    "begin_block": function (func, instr, ) {
+        Wasabi.analysis.begin({func, instr}, "block");
     },
-    "select_ii": function (func, instr, condition, input0, input1) {
-        Wasabi.analysis.select({func, instr}, condition === 1, input0, input1);
+    "nop": function (func, instr, ) {
+        Wasabi.analysis.nop({func, instr}, );
     },
     "begin_loop": function (func, instr, ) {
         Wasabi.analysis.begin({func, instr}, "loop");
     },
-    "i32_or": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.or", input0, input1, result0);
-    },
     "i32_eqz": function (func, instr, input0, result0) {
         Wasabi.analysis.unary({func, instr}, "i32.eqz", input0, result0);
     },
-    "i32_add": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.add", input0, input1, result0);
+    "br_if": function (func, instr, condition, targetLabel, targetInstr) {
+        Wasabi.analysis.br_if({func, instr}, {label: targetLabel, location: {func, instr: targetInstr}}, condition === 1);
+    },
+    "end_block": function (func, instr, beginInstr) {
+        Wasabi.analysis.end({func, instr}, "block", {func, instr: beginInstr});
+    },
+    "end_loop": function (func, instr, beginInstr) {
+        Wasabi.analysis.end({func, instr}, "loop", {func, instr: beginInstr});
+    },
+    "i32_sub": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.sub", input0, input1, result0);
+    },
+    "begin_else": function (func, instr, ifInstr) {
+        Wasabi.analysis.begin({func, instr}, "else", {func, instr: ifInstr});
+    },
+    "end_else": function (func, instr, elseInstr, ifInstr) {
+        Wasabi.analysis.end({func, instr}, "else", {func, instr: elseInstr}, {func, instr: ifInstr});
     },
     "call_i": function (func, instr, targetFunc, arg0) {
         Wasabi.analysis.call_pre({func, instr}, targetFunc, [arg0]);
@@ -269,13 +275,7 @@ Wasabi.module.lowlevelHooks = {
     "call_post": function (func, instr, ) {
         Wasabi.analysis.call_post({func, instr}, []);
     },
-    "br_if": function (func, instr, condition, targetLabel, targetInstr) {
-        Wasabi.analysis.br_if({func, instr}, {label: targetLabel, location: {func, instr: targetInstr}}, condition === 1);
-    },
-    "end_loop": function (func, instr, beginInstr) {
-        Wasabi.analysis.end({func, instr}, "loop", {func, instr: beginInstr});
-    },
-    "drop_i": function (func, instr, value) {
-        Wasabi.analysis.drop({func, instr}, value);
+    "br": function (func, instr, targetLabel, targetInstr) {
+        Wasabi.analysis.br({func, instr}, {label: targetLabel, location: {func, instr: targetInstr}});
     },
 };
