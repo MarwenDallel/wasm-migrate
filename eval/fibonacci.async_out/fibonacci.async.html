@@ -21,6 +21,23 @@
         document.getElementById("output").innerHTML += string;
       }
 
+      function localRepr(view) {
+        let usedMem = view.slice(48 >> 2, (48 >> 2) + 12);
+        let variablesNames = [
+          "$start_addr",
+          "$end_addr",
+          "$used",
+          "$index",
+          "$fibn",
+          "$fibn1",
+          "$fibn2",
+        ];
+        variables = {};
+        variablesNames.forEach((name, index) => {
+          variables[name] = usedMem[index];
+        });
+        console.table(variables);
+      }
       // "async main"
       (async function () {
         document.getElementById("source").innerHTML = await fetch(
@@ -41,26 +58,23 @@
                 view[DATA_ADDR >> 2] = DATA_ADDR + 8;
                 // The end of the stack will not be reached here anyhow.
                 view[(DATA_ADDR + 4) >> 2] = 1024;
-                console.log(view);
                 exports.asyncify_start_unwind(DATA_ADDR);
+
                 sleeping = true;
                 // Resume after the proper delay.
                 setTimeout(function () {
                   console.log("timeout ended, starting to rewind the stack");
+
                   exports.asyncify_start_rewind(DATA_ADDR);
                   // The code is now ready to rewind; to start the process, enter the
                   // first function that should be on the call stack.
-                  exports.fibonacci(46);
-                }, ms);
+                  exports.fibonacci(10);
+                }, 0);
               } else {
                 // We are called as part of a resume/rewind. Stop sleeping.
                 console.log("...resume");
                 exports.asyncify_stop_rewind();
                 sleeping = false;
-                let save = prompt("Export?");
-                if (save === "yes") {
-                  exportLog();
-                }
               }
             },
           },
@@ -81,8 +95,9 @@
 
         // Run the program. When it pauses control flow gets to here, as the
         // stack has unwound.
-        exports.fibonacci(46);
+        exports.fibonacci(10);
         console.log("stack unwound");
+        localRepr(view);
         exports.asyncify_stop_unwind();
       })();
     </script>

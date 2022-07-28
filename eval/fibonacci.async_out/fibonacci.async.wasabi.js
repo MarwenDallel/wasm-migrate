@@ -191,26 +191,17 @@ Wasabi.module.lowlevelHooks = {
     "i32_const": function (func, instr, value) {
         Wasabi.analysis.const_({func, instr}, "i32.const", value);
     },
-    "global_set_i": function (func, instr, index, value) {
-        Wasabi.analysis.global({func, instr}, "global.set", index, value);
-    },
     "global_get_i": function (func, instr, index, value) {
         Wasabi.analysis.global({func, instr}, "global.get", index, value);
+    },
+    "global_set_i": function (func, instr, index, value) {
+        Wasabi.analysis.global({func, instr}, "global.set", index, value);
     },
     "i32_load": function (func, instr, offset, align, addr, value) {
         Wasabi.analysis.load({func, instr}, "i32.load", {addr, offset, align}, value);
     },
-    "return_i": function (func, instr, result0) {
-        Wasabi.analysis.return_({func, instr}, [result0]);
-    },
-    "end_function": function (func, instr, ) {
-        Wasabi.analysis.end({func, instr}, "function", {func, instr: -1});
-    },
-    "local_get_i": function (func, instr, index, value) {
-        Wasabi.analysis.local({func, instr}, "local.get", index, value);
-    },
-    "i32_gt_u": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.gt_u", input0, input1, result0);
+    "i32_eq": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.eq", input0, input1, result0);
     },
     "if": function (func, instr, condition) {
         Wasabi.analysis.if_({func, instr}, condition === 1);
@@ -218,20 +209,29 @@ Wasabi.module.lowlevelHooks = {
     "begin_if": function (func, instr, ) {
         Wasabi.analysis.begin({func, instr}, "if");
     },
+    "return_i": function (func, instr, result0) {
+        Wasabi.analysis.return_({func, instr}, [result0]);
+    },
+    "end_function": function (func, instr, ) {
+        Wasabi.analysis.end({func, instr}, "function", {func, instr: -1});
+    },
+    "i32_gt_u": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.gt_u", input0, input1, result0);
+    },
     "unreachable": function (func, instr, ) {
         Wasabi.analysis.unreachable({func, instr}, );
+    },
+    "local_get_i": function (func, instr, index, value) {
+        Wasabi.analysis.local({func, instr}, "local.get", index, value);
     },
     "end_if": function (func, instr, beginInstr) {
         Wasabi.analysis.end({func, instr}, "if", {func, instr: beginInstr});
     },
-    "return": function (func, instr, ) {
-        Wasabi.analysis.return_({func, instr}, []);
-    },
-    "i32_eq": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.eq", input0, input1, result0);
-    },
     "i32_add": function (func, instr, input0, input1, result0) {
         Wasabi.analysis.binary({func, instr}, "i32.add", input0, input1, result0);
+    },
+    "return": function (func, instr, ) {
+        Wasabi.analysis.return_({func, instr}, []);
     },
     "i32_store": function (func, instr, offset, align, addr, value) {
         Wasabi.analysis.store({func, instr}, "i32.store", {addr, offset, align}, value);

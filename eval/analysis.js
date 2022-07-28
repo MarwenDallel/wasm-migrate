@@ -15,7 +15,7 @@ console.log = function (...data) {
     }
   });
   logData += "\n";
-  log(...data);
+  //log(...data);
 };
 
 const exportLog = function () {
