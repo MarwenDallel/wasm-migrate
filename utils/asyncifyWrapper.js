@@ -12,10 +12,9 @@ class AsyncifyData {
     const dumpView = new Int32Array(dump.buffer);
     const view = new Int32Array(memory.buffer);
     view.set(dumpView); // load into wasm memory;
-    const baseAddr = dumpView[12];
     const endAddr = dumpView[13];
 
-    return new AsyncifyData(memory, baseAddr - 8, endAddr);
+    return new AsyncifyData(memory, 48, endAddr);
   }
 
   prepareView() {
@@ -54,6 +53,10 @@ class AsyncifyData {
     return this.view;
   }
 
+  getData(peak) {
+    return this.view.slice(this.baseAddr >> 2, (this.baseAddr >> 2) + peak);
+  }
+
   toFile() {
     console.log("Dumping view...");
     if (!fs.existsSync("./dump")) {
@@ -69,7 +72,7 @@ class AsyncifyWrapper {
     this.exports = exports;
     this.asyncifyData =
       asyncifyData || new AsyncifyData(exports.memory, 48, 1024);
-    this.sleeping = true;
+    this.sleeping = sleeping || false;
     console.log("Memory initialized:", this._asyncifyData.view);
   }
 
@@ -94,7 +97,6 @@ class AsyncifyWrapper {
   }
 
   startUnwind() {
-    console.log(this.asyncifyData.view);
     this.asyncifyData.prepareView();
     this.exports.asyncify_start_unwind(this.asyncifyData.baseAddr);
     this.sleeping = true;
@@ -116,6 +118,10 @@ class AsyncifyWrapper {
 
   getState() {
     return this.exports.asyncify_get_state();
+  }
+
+  setState(value) {
+    return this.exports.asyncify_set_state(value);
   }
 
   getDataGlobal() {

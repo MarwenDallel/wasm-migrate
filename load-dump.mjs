@@ -1,9 +1,10 @@
 import binaryen from "binaryen";
 import fs from "fs";
 import { AsyncifyWrapper, AsyncifyData } from "./utils/asyncifyWrapper.js";
+import { stackRepr } from "./utils/debug.js";
 
 // Get a WebAssembly binary and compile it to an instance.
-const filePath = process.argv[2] || "./fibonacci.opt.wasm";
+const filePath = process.argv[2] || "./fibonacci.async.wasm";
 const ir = new binaryen.readBinary(fs.readFileSync(filePath));
 
 const binary = ir.emitBinary();
@@ -15,13 +16,11 @@ let importObject = {
       if (!wrapper.sleeping) {
         // We are called in order to start a sleep/unwind.
         console.log("sleep...");
-
-        // wrapper.asyncifyData.toFile();
         wrapper.startUnwind();
-
         // Resume after the proper delay.
         setTimeout(function () {
           console.log("timeout ended, starting to rewind the stack");
+          stackRepr(wrapper.asyncifyData.getData(7));
           wrapper.startRewind();
         }, ms);
       } else {
@@ -39,8 +38,7 @@ let importObject = {
 const instance = new WebAssembly.Instance(compiled, importObject);
 
 const startFnCallback = function () {
-  // Manually subtracting from original parameter to reach last known cycle
-  return instance.exports.fibonacci(46);
+  return instance.exports.fibonacci(10);
 };
 
 const data = AsyncifyData.fromFile(
@@ -55,16 +53,5 @@ const wrapper = new AsyncifyWrapper(
   true
 );
 
-console.log("State", wrapper.getState());
-console.log("Data", wrapper.getDataGlobal());
-
-//  Manually setting global
-wrapper.setDataGlobal(48);
-console.log("Data", wrapper.getDataGlobal());
-
+stackRepr(wrapper.asyncifyData.getData(7));
 wrapper.startRewind();
-console.log("State", wrapper.getState());
-
-//wrapper.start();
-console.log("stack unwound");
-wrapper.stopUnwind();

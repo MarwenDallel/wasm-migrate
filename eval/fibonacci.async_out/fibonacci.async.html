@@ -16,21 +16,22 @@
     <script type="text/javascript" src="fibonacci.async.wasabi.js"></script>
     <script type="text/javascript" src="../analysis.js"></script>
     <script type="text/javascript">
-      const DATA_ADDR = 16;
+      const DATA_ADDR = 48;
       function output(string) {
         document.getElementById("output").innerHTML += string;
       }
 
       function localRepr(view) {
         let usedMem = view.slice(DATA_ADDR >> 2, (DATA_ADDR >> 2) + 12);
+        //[76, 1024, 0, 45, 1, 0, 0]
         let variablesNames = [
-          "$start_addr",
-          "$end_addr",
-          "$used",
+          "$stack_pointer",
+          "$stack_max_size",
+          "$call_index",
           "$index",
           "$fibn",
           "$fibn1",
-          "$fibn2",
+          "$return_value",
         ];
         variables = {};
         variablesNames.forEach((name, index) => {
@@ -58,17 +59,18 @@
                 view[DATA_ADDR >> 2] = DATA_ADDR + 8;
                 // The end of the stack will not be reached here anyhow.
                 view[(DATA_ADDR + 4) >> 2] = 1024;
+                console.log("DATA", exports.asyncify_get_data());
                 exports.asyncify_start_unwind(DATA_ADDR);
-
                 sleeping = true;
                 // Resume after the proper delay.
                 setTimeout(function () {
                   console.log("timeout ended, starting to rewind the stack");
-                  localRepr(view);
                   exports.asyncify_start_rewind(DATA_ADDR);
                   // The code is now ready to rewind; to start the process, enter the
                   // first function that should be on the call stack.
-                  exports.fibonacci(10);
+                  let result = exports.fibonacci(10);
+                  localRepr(view);
+                  console.log("result:", result);
                 }, 0);
               } else {
                 // We are called as part of a resume/rewind. Stop sleeping.

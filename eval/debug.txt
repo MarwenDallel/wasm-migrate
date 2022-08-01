@@ -1,36 +1,59 @@
+Asyncify stack:
+[CURRENT_STACK_LOCATION, STACK_END, CALL_INDICES, LOCAL_VARS]
+
+CALL_INDICES: Each function call is given an index. These indices allow to rewind to the correct function call.
+During unwind the indexes are added to the stack. During rewind, they are popped.
+Each function we enter will pop one call index from the stack (index of the next call to make)
 
 ADDR(48) = Space used by local variables.
-ADDR(56) = Local 17 and Local 18. (0)
+ADDR(56) = Call Index
 ADDR(60..76) = Actual local variables used by fibonacci
-
-Local 17 is either the fake return value or the actual return value.
-Local 18 indicates whether we should enter sleep again when state = rewinding (maybe it represents whether we are sleeping or not)
 
 ;; Normal execution
 1. Check if we are rewinding, if we are load values from memory
 2. Else, execute initialization of local variables
 3. In the fibonacci while loop, if we are in normal execution,  create a copy of every value that is stored on the stack (locals, results)
 4. If normal execution, set 1 on top of the stack
-5. Else check if $18 == 0 (not sure why). In which case 1 or 0 is pushed on top of the stack.
-4. If $18 == 0 or we are in normal execution, make function call to sleep.
+5. Else check if $restored_call_index == 0. In which case 1 or 0 is pushed on top of the stack.
+4. If $restored_call_index == 0 or we are in normal execution, make function call to sleep.
 
 ;; Unwinding
 5. Inside sleep, memory start and end address is set (48, 1024). Then start unwind is called.
 6. Start unwind reads those values from the memory and checks if we exceeded the end addr. 
 7. If not, check if we are unwinding right after sleep call
-8. Since we are, 0 is pushed on top of the stack and local $17 is set to 0.
+8. Since we are, 0 is pushed on top of the stack and local $17 (call index) is set to 0.
 9. 0 (local 17) is stored at offset 56. 56 is incremented by 4 and stored at offset 48. Hence the double global.get. This indicates how much of the allocated memory space for the stack we used.
 Stack: [48] -> [56] -> [56, 0] -> [] -> [48, 48] -> [48, 56] -> [48, 60] -> [] 
-Maybe local this also hints at how many locals we need to restore.
-10. All locals are stored in the memory starting at offset 60. Since the numbers of locals is known at compile time, we increment the space indicator by 16 (4 locals: $index, $fibn, $fibn1, $fibn15?? ($15))
+10. All locals are stored in the memory starting at offset 60. Since the numbers of locals is known at compile time, we increment the space indicator by 16 (4 locals: $index, $fibn, $fibn1, $fibn2?? ($15))
 11. A fake value is returned from fibonacci, control is given back to JS code. (this is why we need to enter it again!)
 
 ;; Rewinding
 12. JS code invokes start_rewind, used spaces is checked against max and state is set to rewind.
 13. Fibonacci is invoked again, this time local variables are loaded and the used space is updated (-16). ADDR(48) = 60
-14. We also account for the first space used (by local 17) and subtract 4. ADDR(48) = 56. Local $18 is set to 0 (???)
+14. We also account for the first space used (by Call Index) and subtract 4. ADDR(48) = 56. Local $restored_call_index is set to 0 (restored)
 15. We skip local intialization and fibonacci while loop.
 
 ;; Stop rewind
-16. If local 18 is 0, enter sleep function since sleeping is true, we stop the rewind. Sleeping is set to false and stop rewind is called (state = normal)
+16. If Call Index Cpy is 0, enter sleep function since sleeping is true, we stop the rewind. Sleeping is set to false and stop rewind is called (state = normal)
 17. Since we want to keep executing and we don't want to interrupt the code (no unwind call made), we skip the current iteration and go to the beginning of the while loop.
+
+Memory evolution:
+Start Index: 12 (addr = 48)
+[56, 1024]
+// Start Unwind
+[56, 1024, 0] «- call index
+[60, 1024, 0] «- increment data structure pointer (60 points to next empty slot: 15)
+[60, 1024, 0, 45] «- index is stored
+[60, 1024, 0, 45, 1] «- fibn is stored
+[60, 1024, 0, 45, 1, 0] «- fibn1 is stored
+[60, 1024, 0, 45, 1, 0, 0] «- fibn_return_value (local 15) is stored
+[76, 1024, 0, 45, 1, 0, 0] «- data structure pointer is updated to point to the next empty slot (19)
+// Stop unwind ;; memory is not modified
+// Use memory to check if we exceeded limit (76 > 1024)
+// State is set to normal
+// Start rewind
+// Use memory to check if we exceeded limit (76 > 1024)
+[60, 1024, 0, 45, 1, 0, 0] «- data structure pointer is updated to point to the next slot to load (15)
+[56, 1024, 0, 45, 1, 0, 0] «- data structure pointer is updated to point to the next slot to load (14)
+// Stop Rewind
+// Use memory to check if we exceeded limit (56 > 1024)
