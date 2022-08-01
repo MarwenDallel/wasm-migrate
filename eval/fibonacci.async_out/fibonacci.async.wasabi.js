@@ -42,20 +42,32 @@ let Wasabi = {
     // map a table index to a function index
     resolveTableIdx: function (tableIdx) {
         if (Wasabi.module.exports === undefined || Wasabi.module.table === undefined) {
-            console.warn("cannot resolve table index without exports and table (possible reason: exports and table are not available during Wasm start function)");
+            console.warn("Wasabi: cannot resolve table index without module exports and table (possible reason: exports and table are usually not available during execution of the Wasm start function)");
             return undefined;
         }
 
-        // FIXME even though MDN says "name property is the toString() result of the function's index in the wasm module"
-        // Firefox seems to give out different names :/ -> bug report, either documentation or implementation is wrong
-        // see https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions
+        const resolvedFunction = Wasabi.module.table.get(tableIdx);
+        if (resolvedFunction === null) {
+            console.warn("Wasabi: resolving indirectly called function failed because table returned `null` at index " + tableIdx);
+            return undefined;
+        }
 
-        // dirty HACK subtract the "name index" of the first function, should correct for the wrong property
-        // const firstFunctionIdx = parseInt(Wasabi.module.exports[Wasabi.module.info.firstFunctionExportName].name);
-        // const functionIdx = parseInt(Wasabi.module.table.get(tableIdx).name) - firstFunctionIdx;
-        const functionIdx = parseInt(Wasabi.module.table.get(tableIdx).name);
+        // NOTE We want to get the _index_ of the resolved function to the analysis code, but the
+        // WebAssembly API only gives us a _function object_.
+        // HACK We can abuse the `.name` property of the function object to get the index.
+        // See the MDN, which says the "name property is the toString() result of the function's 
+        // index in the wasm module".
+        // https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions
+        const resolvedFunctionIdx = parseInt(resolvedFunction.name);
 
-        return (functionIdx >= Wasabi.module.info.functions.length) ? 0 : functionIdx;
+        // However, because we inserted a bunch of imported hook functions into the module, the
+        // index retrieved above is in terms of the _instrumented_ module. We want to get the
+        // function index in the _original_ module however, so we adjust it here:
+        if (resolvedFunctionIdx >= Wasabi.module.info.originalFunctionImportsCount) {
+            return resolvedFunctionIdx - Object.keys(Wasabi.module.lowlevelHooks).length;
+        } else {
+            return resolvedFunctionIdx;
+        }
     },
 
     // call end hooks for all "intermediate" or "implicitly ended blocks" of a branch table
@@ -74,18 +86,6 @@ let Wasabi = {
                 // not undefined only for block type "else"
                 (begin_if === undefined) ? undefined : {func, instr: begin_if});
         }
-    },
-
-    loc2func: function(loc) {
-        // TODO
-    },
-
-    loc2instr: function(loc) {
-        // TODO
-    },
-
-    functionType: function(func) {
-        // TODO
     },
 
     module: {
@@ -139,7 +139,7 @@ let Wasabi = {
     const importObjectWithHooks = function(importObject) {
         for (const hook of Wasabi.HOOK_NAMES) {
             if (Wasabi.analysis[hook] === undefined) {
-                console.debug(hook, "hook not provided by Wasabi.analysis, add empty function as fallback");
+                console.debug("Wasabi: hook", hook, "not provided by Wasabi.analysis, I will use an empty function as a fallback");
                 Wasabi.analysis[hook] = defaultHooks[hook];
             }
         }
@@ -161,6 +161,12 @@ let Wasabi = {
         result.then(({module, instance}) => {
             wireInstanceExports(instance);
         });
+
+        // FIXME Due to the added imports of __wasabi functions, host code that mutates the table
+        // might insert the wrong numerical index into the table.
+        // We could at least detect (and warn that this changes behavior), or fix it, by wrapping
+        // the exported table in a proxy object, that adapts the inserted get/set calls accordingly.
+
         return result;
     };
 
@@ -182,7 +188,7 @@ let Wasabi = {
     WebAssembly.Instance = newInstance;
 }
 
-Wasabi.module.info = {"functions":[{"type":"i|","import":["env","sleep"],"export":[],"locals":"","instrCount":0},{"type":"i|i","import":null,"export":["fibonacci"],"locals":"iiiiiiiiiiiiiiiiiiii","instrCount":209},{"type":"i|","import":null,"export":["asyncify_start_unwind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_unwind"],"locals":"","instrCount":11},{"type":"i|","import":null,"export":["asyncify_start_rewind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_rewind"],"locals":"","instrCount":11},{"type":"|i","import":null,"export":["asyncify_get_state"],"locals":"","instrCount":2}],"globals":"ii","start":null,"tableExportName":null,"brTables":[]};
+Wasabi.module.info = {"functions":[{"type":"i|","import":["env","sleep"],"export":[],"locals":"","instrCount":0},{"type":"i|i","import":null,"export":["fibonacci"],"locals":"iiiiiiiiiiiiiiiiiiii","instrCount":209},{"type":"i|","import":null,"export":["asyncify_start_unwind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_unwind"],"locals":"","instrCount":11},{"type":"i|","import":null,"export":["asyncify_start_rewind"],"locals":"","instrCount":13},{"type":"|","import":null,"export":["asyncify_stop_rewind"],"locals":"","instrCount":11},{"type":"|i","import":null,"export":["asyncify_get_state"],"locals":"","instrCount":2}],"globals":"ii","start":null,"tableExportName":null,"brTables":[],"originalFunctionImportsCount":1};
 
 Wasabi.module.lowlevelHooks = {
     "begin_function": function (func, instr, ) {
@@ -197,6 +203,15 @@ Wasabi.module.lowlevelHooks = {
     "global_set_i": function (func, instr, index, value) {
         Wasabi.analysis.global({func, instr}, "global.set", index, value);
     },
+    "local_get_i": function (func, instr, index, value) {
+        Wasabi.analysis.local({func, instr}, "local.get", index, value);
+    },
+    "return_i": function (func, instr, result0) {
+        Wasabi.analysis.return_({func, instr}, [result0]);
+    },
+    "end_function": function (func, instr, ) {
+        Wasabi.analysis.end({func, instr}, "function", {func, instr: -1});
+    },
     "i32_load": function (func, instr, offset, align, addr, value) {
         Wasabi.analysis.load({func, instr}, "i32.load", {addr, offset, align}, value);
     },
@@ -209,29 +224,20 @@ Wasabi.module.lowlevelHooks = {
     "begin_if": function (func, instr, ) {
         Wasabi.analysis.begin({func, instr}, "if");
     },
-    "return_i": function (func, instr, result0) {
-        Wasabi.analysis.return_({func, instr}, [result0]);
-    },
-    "end_function": function (func, instr, ) {
-        Wasabi.analysis.end({func, instr}, "function", {func, instr: -1});
-    },
     "i32_gt_u": function (func, instr, input0, input1, result0) {
         Wasabi.analysis.binary({func, instr}, "i32.gt_u", input0, input1, result0);
     },
     "unreachable": function (func, instr, ) {
         Wasabi.analysis.unreachable({func, instr}, );
     },
-    "local_get_i": function (func, instr, index, value) {
-        Wasabi.analysis.local({func, instr}, "local.get", index, value);
-    },
     "end_if": function (func, instr, beginInstr) {
         Wasabi.analysis.end({func, instr}, "if", {func, instr: beginInstr});
     },
-    "i32_add": function (func, instr, input0, input1, result0) {
-        Wasabi.analysis.binary({func, instr}, "i32.add", input0, input1, result0);
-    },
     "return": function (func, instr, ) {
         Wasabi.analysis.return_({func, instr}, []);
+    },
+    "i32_add": function (func, instr, input0, input1, result0) {
+        Wasabi.analysis.binary({func, instr}, "i32.add", input0, input1, result0);
     },
     "i32_store": function (func, instr, offset, align, addr, value) {
         Wasabi.analysis.store({func, instr}, "i32.store", {addr, offset, align}, value);

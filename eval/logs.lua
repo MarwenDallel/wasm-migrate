@@ -181,7 +181,7 @@ timeout ended  starting to rewind the stack
 {func:4 instr:-1} begin function 
 {func:4 instr:0} i32.const value = 2 
 {func:4 instr:1} global.set global # $__asyncify_state value = 2 
-{func:4 instr:2} local.get local # 0 value = 48 
+{func:4 instr:2} local.get local # $DATA_ADDR value = 48 
 {func:4 instr:3} global.set global # $__asyncify_data  value = 48 
 {func:4 instr:4} global.get global # $__asyncify_data  value = 48 
 {func:4 instr:5} i32.load value = 76, from = {addr:48 offset:0 align:2} 
@@ -280,6 +280,7 @@ timeout ended  starting to rewind the stack
 {func:1 instr:124} i32.const value = 1000 
 {func:1 instr:125} direct call to func # 0 args = 1000 
 ...resume 
+;; Stop Rewind
 {func:5 instr:-1} begin function 
 {func:5 instr:0} i32.const value = 0 
 {func:5 instr:1} global.set global # $__asyncify_state value = 0 

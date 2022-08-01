@@ -5,18 +5,18 @@
 const log = console.log;
 let logData = "";
 
-console.log = function (...data) {
-  data.forEach((d) => {
-    // if d is an array, convert it to a string
-    if (ArrayBuffer.isView(d)) {
-      logData += JSON.stringify(d.slice(0, 20)) + " ";
-    } else {
-      logData += JSON.stringify(d) + " ";
-    }
-  });
-  logData += "\n";
-  //log(...data);
-};
+// console.log = function (...data) {
+//   data.forEach((d) => {
+//     // if d is an array, convert it to a string
+//     if (ArrayBuffer.isView(d)) {
+//       logData += JSON.stringify(d.slice(0, 20)) + " ";
+//     } else {
+//       logData += JSON.stringify(d) + " ";
+//     }
+//   });
+//   logData += "\n";
+//   log(...data);
+// };
 
 const exportLog = function () {
   // save data to blob file
