@@ -3,6 +3,7 @@ import fs from "fs";
 import { exit } from "process";
 import { AsyncifyWrapper } from "./utils/asyncifyWrapper.js";
 import { stackRepr } from "./utils/debug.js";
+import { startClient } from "./ws/wsClient.mjs";
 
 // Get a WebAssembly binary and compile it to an instance.
 const filePath = process.argv[2] || "./fibonacci.async.wasm";
@@ -17,8 +18,6 @@ try {
 const binary = ir.emitBinary();
 const compiled = new WebAssembly.Module(binary);
 
-let it = 0;
-
 let importObject = {
   env: {
     sleep: function (ms) {
@@ -27,17 +26,19 @@ let importObject = {
         console.log("sleep...");
         wrapper.startUnwind();
 
-        it++;
         // Resume after the proper delay.
         setTimeout(function () {
           console.log("timeout ended, starting to rewind the stack");
           stackRepr(wrapper.asyncifyData.getData(7));
-          if (it == 5) {
-            wrapper.asyncifyData.toFile();
+          if (wrapper.migrate) {
+            console.log("Migration event issued");
+            // TODO: send the dump and fibonacci file to the server.
+            // Server should forward files to another client.
+            wrapper.asyncifyData.toFile("fibonacci");
             exit(0);
           }
           wrapper.startRewind();
-        }, 0);
+        }, 1000);
       } else {
         // We are called as part of a resume/rewind. Stop sleeping.
         console.log("...resume");
@@ -53,6 +54,8 @@ const startFnCallback = function () {
   return instance.exports.fibonacci(10);
 };
 const wrapper = new AsyncifyWrapper(startFnCallback, instance.exports);
+
+startClient(wrapper);
 
 wrapper.start();
 console.log("stack unwound");

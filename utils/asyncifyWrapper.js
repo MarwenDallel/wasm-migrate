@@ -1,5 +1,10 @@
 const fs = require("fs");
 
+const timestamp = () => {
+  const d = new Date();
+  return `${d.getFullYear()}${d.getMonth()}${d.getDate()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}`;
+};
+
 class AsyncifyData {
   constructor(memory, baseAddr, endAddr) {
     this.view = new Int32Array(memory.buffer);
@@ -7,14 +12,14 @@ class AsyncifyData {
     this.endAddr = endAddr;
   }
 
-  static fromFile(filePath, memory) {
+  static fromFile(filePath, baseAddr, memory) {
     const dump = fs.readFileSync(filePath);
     const dumpView = new Int32Array(dump.buffer);
     const view = new Int32Array(memory.buffer);
     view.set(dumpView); // load into wasm memory;
-    const endAddr = dumpView[13];
+    const endAddr = dumpView[(baseAddr + 4) >> 2];
 
-    return new AsyncifyData(memory, 48, endAddr);
+    return new AsyncifyData(memory, baseAddr, endAddr);
   }
 
   prepareView() {
@@ -57,12 +62,14 @@ class AsyncifyData {
     return this.view.slice(this.baseAddr >> 2, (this.baseAddr >> 2) + peak);
   }
 
-  toFile() {
+  toFile(name) {
     console.log("Dumping view...");
     if (!fs.existsSync("./dump")) {
       fs.mkdirSync("./dump");
     }
-    fs.writeFileSync("./dump/fibonacci.bin", Buffer.from(this.view.buffer));
+    const filename = `${name}.${timestamp()}.bin`;
+    fs.writeFileSync(`./dump/${filename}`, Buffer.from(this.view.buffer));
+    console.log(`Memory snapshot created ${filename}`);
   }
 }
 
@@ -73,11 +80,13 @@ class AsyncifyWrapper {
     this.asyncifyData =
       asyncifyData || new AsyncifyData(exports.memory, 48, 1024);
     this.sleeping = sleeping || false;
+    this.migrate = false;
     console.log("Memory initialized:", this._asyncifyData.view);
   }
 
   start() {
-    this.startFn();
+    const result = this.startFn();
+    console.log("Function return value:", result);
   }
 
   get sleeping() {
@@ -86,6 +95,14 @@ class AsyncifyWrapper {
 
   set sleeping(value) {
     this._sleeping = value;
+  }
+
+  get migrate() {
+    return this._migrate;
+  }
+
+  set migrate(value) {
+    this._migrate = value;
   }
 
   get asyncifyData() {

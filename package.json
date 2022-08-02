@@ -5,10 +5,15 @@
   "license": "MIT",
   "dependencies": {
     "binaryen": "^109.0.0",
-    "readline-sync": "^1.4.10"
+    "chalk": "^5.0.1",
+    "readline-sync": "^1.4.10",
+    "ws": "^8.8.1"
   },
   "scripts": {
-    "start": "node glue-code.mjs",
-    "test": "node utils/test.mjs"
+    "start-server": "node ws/wsServer.mjs",
+    "start-client": "node glue-code.mjs",
+    "resume": "node load-dump.mjs",
+    "test": "node utils/test.mjs",
+    "view-dump": "node utils/readDump.js"
   }
 }

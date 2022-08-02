@@ -4,7 +4,8 @@ import { AsyncifyWrapper, AsyncifyData } from "./utils/asyncifyWrapper.js";
 import { stackRepr } from "./utils/debug.js";
 
 // Get a WebAssembly binary and compile it to an instance.
-const filePath = process.argv[2] || "./fibonacci.async.wasm";
+const filePath = "./fibonacci.async.wasm";
+const dumpPath = process.argv[2] || "./fibonacci.bin";
 const ir = new binaryen.readBinary(fs.readFileSync(filePath));
 
 const binary = ir.emitBinary();
@@ -29,9 +30,6 @@ let importObject = {
         wrapper.stopRewind();
       }
     },
-    print: function (str) {
-      console.log(str);
-    },
   },
 };
 
@@ -42,7 +40,8 @@ const startFnCallback = function () {
 };
 
 const data = AsyncifyData.fromFile(
-  "./dump/fibonacci.bin",
+  `./dump/${dumpPath}`,
+  48,
   instance.exports.memory
 );
 
