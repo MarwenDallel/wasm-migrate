@@ -9,7 +9,6 @@ import {
   sendMessage,
 } from "./wsUtils.mjs";
 
-const url = "ws://localhost:8080";
 const client = new Client();
 const rl = rlInterace();
 let ws;
@@ -48,7 +47,8 @@ function handleMessage(message, wrapper) {
   }
 }
 
-export function startClient(wrapper) {
+export function startClient(wrapper, port) {
+  const url = `ws://localhost:${port}`;
   ws = new WebSocket(url);
   ws.on("open", handleOpen);
   ws.on("close", handleClose);
