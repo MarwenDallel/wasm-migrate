@@ -2,7 +2,7 @@ Asyncify stack:
 [CURRENT_STACK_LOCATION, STACK_END, CALL_INDICES, LOCAL_VARS]
 
 CALL_INDICES: Each function call is given an index. These indices allow to rewind to the correct function call.
-During unwind the indexes are added to the stack. During rewind, they are popped.
+During unwind the indices are added to the stack. During rewind, they are popped.
 Each function we enter will pop one call index from the stack (index of the next call to make)
 
 ADDR(48) = Space used by local variables.

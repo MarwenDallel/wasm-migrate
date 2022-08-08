@@ -1,8 +1,9 @@
 {
-  "name": "wasm-reconstruct",
+  "name": "wasm-migrate",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./lib/start.mjs",
   "license": "MIT",
+  "preferGlobal": true,
   "dependencies": {
     "binaryen": "^109.0.0",
     "chalk": "^5.0.1",
@@ -10,7 +11,8 @@
     "ws": "^8.8.1",
     "yargs": "^17.5.1"
   },
+  "bin": "./bin/index.mjs",
   "scripts": {
-    "start": "node index.mjs"
+    "start": "node ./bin/index.mjs"
   }
 }
