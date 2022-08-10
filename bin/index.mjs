@@ -2,27 +2,13 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { run } from "../lib/start.mjs";
-import { startServer } from "../lib/ws/wsServer.mjs";
+import mqttCommandIssuer from "../lib/cli/mqttCommandIssuer.mjs";
+import { runPassive } from "../lib/start.mjs";
 
 yargs(hideBin(process.argv))
   .scriptName("wasm-migrate")
   .command(
-    "serve",
-    "Start server",
-    (yargs) => {
-      return yargs.option("port", {
-        describe: "Port number of server",
-        type: "number",
-        default: 8080,
-      });
-    },
-    (argv) => {
-      startServer(argv.port);
-    }
-  )
-  .command(
-    "run <wasm-file> <fn> [args...]",
+    "start <wasm-file> <fn> [args...]",
     "Start or resume execution with migration support",
     (yargs) => {
       return yargs
@@ -39,11 +25,6 @@ yargs(hideBin(process.argv))
           describe: "Arguments to pass to the start function",
           type: "number",
         })
-        .option("port", {
-          describe: "Port number of server",
-          type: "number",
-          default: 8080,
-        })
         .option("d", {
           alias: ["dump", "dump-file"],
           describe: "Memory dump file path",
@@ -56,14 +37,41 @@ yargs(hideBin(process.argv))
         });
     },
     (argv) => {
-      run(
+      mqttCommandIssuer.startOrResume(
         argv.wasmFile,
         argv.fn,
         argv.args,
         argv.dumpFile,
-        argv.optimize,
-        argv.port
+        argv.optimize
       );
+    }
+  )
+  .command(
+    "migrate <source-cid> <destination-cid>",
+    "Migrates the execution to another client",
+    (yargs) => {
+      return yargs
+        .positional("source-cid", {
+          alias: ["src-cid", "src"],
+          describe: "Source client ID",
+          type: "string",
+        })
+        .positional("destionation-cid", {
+          alias: ["dst-cid", "dst"],
+          describe: "Destionation client ID",
+          type: "string",
+        });
+    },
+    (argv) => {
+      mqttCommandIssuer.migrate(argv.sourceCid, argv.destinationCid);
+    }
+  )
+  .command(
+    "start-passive",
+    "Starts a passive client",
+    (yargs) => {},
+    () => {
+      runPassive();
     }
   )
   .demandCommand(1)
