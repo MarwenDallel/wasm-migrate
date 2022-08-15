@@ -8,12 +8,15 @@ import { runPassive } from "../lib/start.mjs";
 yargs(hideBin(process.argv))
   .scriptName("wasm-migrate")
   .command(
-    "start <wasm-file> <fn> [args...]",
+    "start <client-id> <wasm-file> <fn> [args...]",
     "Start or resume execution with migration support",
     (yargs) => {
       return yargs
-        .positional("f", {
-          alias: "wasm-file",
+        .positional("client-id", {
+          describe: "MQTT client ID",
+          type: "string",
+        })
+        .positional("wasm-file", {
           describe: "Wasm file path",
           type: "string",
         })
@@ -25,6 +28,7 @@ yargs(hideBin(process.argv))
           describe: "Arguments to pass to the start function",
           type: "number",
         })
+
         .option("d", {
           alias: ["dump", "dump-file"],
           describe: "Memory dump file path",
@@ -38,6 +42,7 @@ yargs(hideBin(process.argv))
     },
     (argv) => {
       mqttCommandIssuer.startOrResume(
+        argv.clientId,
         argv.wasmFile,
         argv.fn,
         argv.args,
@@ -69,9 +74,16 @@ yargs(hideBin(process.argv))
   .command(
     "start-passive",
     "Starts a passive client",
-    (yargs) => {},
-    () => {
-      runPassive();
+    (yargs) => {
+      return yargs.option("cid", {
+        alias: ["client-id"],
+        describe: "Client ID",
+        type: "string",
+        default: "wasmMigrateClient",
+      });
+    },
+    (argv) => {
+      runPassive(argv.clientId);
     }
   )
   .demandCommand(1)

@@ -18,5 +18,8 @@
   "bin": "./bin/index.mjs",
   "scripts": {
     "start": "node ./bin/index.mjs"
+  },
+  "devDependencies": {
+    "async-mqtt": "^2.6.2"
   }
 }

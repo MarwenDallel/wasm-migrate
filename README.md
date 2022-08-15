@@ -3,20 +3,22 @@
 ### Initial setup
 
 ```sh
-npm run start-server
-npm run start-client
+wasm-migrate start-passive --cid wasmMigrateClientC
+wasm-migrate start-passive --cid wasmMigrateClientB
+wasm-migrate start-passive --cid wasmMigrateClient
+
 ```
 
-Issue migration event by sending the message `migrate` from the server.
-
-### Inspect dump file
+### Start code execution
 
 ```sh
-npm run view-dump <DUMP_FILE>
+wasm-migrate start wasmMigrateClient wasm/fibonacci.async.wasm fibonacci 46
 ```
 
-### Resume code execution
+### Migrate task
 
 ```sh
-npm run resume <DUMP_FILE>
+wasm-migrate migrate wasmMigrateClient wasmMigrateClientB
+wasm-migrate migrate wasmMigrateClientB wasmMigrateClientC
+
 ```
