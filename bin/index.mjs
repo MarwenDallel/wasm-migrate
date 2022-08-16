@@ -15,7 +15,6 @@ yargs(hideBin(process.argv))
         alias: ["client-id"],
         describe: "Client ID",
         type: "string",
-        default: "wasmMigrateClient",
       });
     },
     (argv) => {
