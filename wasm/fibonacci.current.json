@@ -1,0 +1,1000 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "Module",
+      "id": null,
+      "fields": [
+        {
+          "type": "TypeInstruction",
+          "functype": {
+            "type": "Signature",
+            "params": [
+              {
+                "valtype": "i32"
+              }
+            ],
+            "results": [
+              "i32"
+            ]
+          },
+          "loc": {
+            "start": {
+              "line": -1,
+              "column": 11
+            },
+            "end": {
+              "line": -1,
+              "column": 16
+            }
+          }
+        },
+        {
+          "type": "TypeInstruction",
+          "functype": {
+            "type": "Signature",
+            "params": [],
+            "results": []
+          },
+          "loc": {
+            "start": {
+              "line": -1,
+              "column": 16
+            },
+            "end": {
+              "line": -1,
+              "column": 19
+            }
+          }
+        },
+        {
+          "type": "ModuleImport",
+          "module": "env",
+          "name": "sleep",
+          "descr": {
+            "type": "FuncImportDescr",
+            "id": {
+              "type": "NumberLiteral",
+              "value": 1,
+              "raw": "1"
+            },
+            "signature": {
+              "type": "Signature",
+              "params": [],
+              "results": []
+            }
+          },
+          "loc": {
+            "start": {
+              "line": -1,
+              "column": 22
+            },
+            "end": {
+              "line": -1,
+              "column": 34
+            }
+          }
+        },
+        {
+          "type": "Memory",
+          "limits": {
+            "type": "Limit",
+            "min": 1
+          },
+          "id": {
+            "type": "NumberLiteral",
+            "value": 0,
+            "raw": "0"
+          }
+        },
+        {
+          "type": "Func",
+          "name": {
+            "type": "Identifier",
+            "value": "func_0",
+            "raw": ""
+          },
+          "signature": {
+            "type": "Signature",
+            "params": [
+              {
+                "valtype": "i32"
+              }
+            ],
+            "results": [
+              "i32"
+            ]
+          },
+          "body": [
+            {
+              "type": "Instr",
+              "id": "local",
+              "args": [
+                {
+                  "type": "ValtypeLiteral",
+                  "name": "i32"
+                },
+                {
+                  "type": "ValtypeLiteral",
+                  "name": "i32"
+                },
+                {
+                  "type": "ValtypeLiteral",
+                  "name": "i32"
+                },
+                {
+                  "type": "ValtypeLiteral",
+                  "name": "i32"
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 72
+                },
+                "end": {
+                  "line": -1,
+                  "column": 74
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "const",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 0,
+                  "raw": "0"
+                }
+              ],
+              "object": "i32",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 74
+                },
+                "end": {
+                  "line": -1,
+                  "column": 76
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "set_local",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 1,
+                  "raw": "1"
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 76
+                },
+                "end": {
+                  "line": -1,
+                  "column": 78
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "const",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 1,
+                  "raw": "1"
+                }
+              ],
+              "object": "i32",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 78
+                },
+                "end": {
+                  "line": -1,
+                  "column": 80
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "set_local",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 2,
+                  "raw": "2"
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 80
+                },
+                "end": {
+                  "line": -1,
+                  "column": 82
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "const",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 0,
+                  "raw": "0"
+                }
+              ],
+              "object": "i32",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 82
+                },
+                "end": {
+                  "line": -1,
+                  "column": 84
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "set_local",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 3,
+                  "raw": "3"
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 84
+                },
+                "end": {
+                  "line": -1,
+                  "column": 86
+                }
+              }
+            },
+            {
+              "type": "BlockInstruction",
+              "id": "block",
+              "label": {
+                "type": "Identifier",
+                "value": "block_0",
+                "raw": ""
+              },
+              "instr": [
+                {
+                  "type": "LoopInstruction",
+                  "id": "loop",
+                  "label": {
+                    "type": "Identifier",
+                    "value": "loop_0",
+                    "raw": ""
+                  },
+                  "resulttype": null,
+                  "instr": [
+                    {
+                      "type": "Instr",
+                      "id": "get_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 0,
+                          "raw": "0"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 90
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 92
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "eqz",
+                      "args": [],
+                      "object": "i32",
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 92
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 93
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "br_if",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 1,
+                          "raw": "1"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 93
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 95
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "get_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 2,
+                          "raw": "2"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 95
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 97
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "set_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 3,
+                          "raw": "3"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 97
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 99
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "get_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 1,
+                          "raw": "1"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 99
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 101
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "set_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 2,
+                          "raw": "2"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 101
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 103
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "get_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 2,
+                          "raw": "2"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 103
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 105
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "get_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 3,
+                          "raw": "3"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 105
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 107
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "add",
+                      "args": [],
+                      "object": "i32",
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 107
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 108
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "set_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 1,
+                          "raw": "1"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 108
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 110
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "get_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 0,
+                          "raw": "0"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 110
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 112
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "const",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 1,
+                          "raw": "1"
+                        }
+                      ],
+                      "object": "i32",
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 112
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 114
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "sub",
+                      "args": [],
+                      "object": "i32",
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 114
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 115
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "set_local",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 0,
+                          "raw": "0"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 115
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 117
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "br",
+                      "args": [
+                        {
+                          "type": "NumberLiteral",
+                          "value": 0,
+                          "raw": "0"
+                        }
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 117
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 119
+                        }
+                      }
+                    },
+                    {
+                      "type": "CallInstruction",
+                      "id": "call",
+                      "index": {
+                        "type": "NumberLiteral",
+                        "value": 1,
+                        "raw": "1"
+                      },
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 119
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 121
+                        }
+                      }
+                    },
+                    {
+                      "type": "Instr",
+                      "id": "end",
+                      "args": [],
+                      "loc": {
+                        "start": {
+                          "line": -1,
+                          "column": 121
+                        },
+                        "end": {
+                          "line": -1,
+                          "column": 122
+                        }
+                      }
+                    }
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": -1,
+                      "column": 71
+                    },
+                    "end": {
+                      "line": -1,
+                      "column": 102
+                    }
+                  }
+                },
+                {
+                  "type": "Instr",
+                  "id": "end",
+                  "args": [],
+                  "loc": {
+                    "start": {
+                      "line": -1,
+                      "column": 120
+                    },
+                    "end": {
+                      "line": -1,
+                      "column": 121
+                    }
+                  }
+                }
+              ],
+              "result": null,
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 69
+                },
+                "end": {
+                  "line": -1,
+                  "column": 103
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "get_local",
+              "args": [
+                {
+                  "type": "NumberLiteral",
+                  "value": 1,
+                  "raw": "1"
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 121
+                },
+                "end": {
+                  "line": -1,
+                  "column": 123
+                }
+              }
+            },
+            {
+              "type": "Instr",
+              "id": "end",
+              "args": [],
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 123
+                },
+                "end": {
+                  "line": -1,
+                  "column": 124
+                }
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": -1,
+              "column": 70
+            },
+            "end": {
+              "line": -1,
+              "column": 124
+            }
+          },
+          "metadata": {
+            "bodySize": 53
+          }
+        },
+        {
+          "type": "ModuleExport",
+          "name": "fibonacci",
+          "descr": {
+            "type": "ModuleExportDescr",
+            "exportType": "Func",
+            "id": {
+              "type": "NumberLiteral",
+              "value": 1,
+              "raw": "1"
+            }
+          },
+          "loc": {
+            "start": {
+              "line": -1,
+              "column": 46
+            },
+            "end": {
+              "line": -1,
+              "column": 58
+            }
+          }
+        },
+        {
+          "type": "ModuleExport",
+          "name": "memory",
+          "descr": {
+            "type": "ModuleExportDescr",
+            "exportType": "Mem",
+            "id": {
+              "type": "NumberLiteral",
+              "value": 0,
+              "raw": "0"
+            }
+          },
+          "loc": {
+            "start": {
+              "line": -1,
+              "column": 58
+            },
+            "end": {
+              "line": -1,
+              "column": 67
+            }
+          }
+        }
+      ],
+      "metadata": {
+        "type": "ModuleMetadata",
+        "sections": [
+          {
+            "type": "SectionMetadata",
+            "section": "type",
+            "startOffset": 9,
+            "size": {
+              "type": "NumberLiteral",
+              "value": 9,
+              "raw": "6",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 9
+                },
+                "end": {
+                  "line": -1,
+                  "column": 10
+                }
+              }
+            },
+            "vectorOfSize": {
+              "type": "NumberLiteral",
+              "value": 2,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 10
+                },
+                "end": {
+                  "line": -1,
+                  "column": 11
+                }
+              }
+            }
+          },
+          {
+            "type": "SectionMetadata",
+            "section": "import",
+            "startOffset": 20,
+            "size": {
+              "type": "NumberLiteral",
+              "value": 13,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 20
+                },
+                "end": {
+                  "line": -1,
+                  "column": 21
+                }
+              }
+            },
+            "vectorOfSize": {
+              "type": "NumberLiteral",
+              "value": 1,
+              "raw": "0",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 21
+                },
+                "end": {
+                  "line": -1,
+                  "column": 22
+                }
+              }
+            }
+          },
+          {
+            "type": "SectionMetadata",
+            "section": "func",
+            "startOffset": 35,
+            "size": {
+              "type": "NumberLiteral",
+              "value": 2,
+              "raw": "2",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 35
+                },
+                "end": {
+                  "line": -1,
+                  "column": 36
+                }
+              }
+            },
+            "vectorOfSize": {
+              "type": "NumberLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 36
+                },
+                "end": {
+                  "line": -1,
+                  "column": 37
+                }
+              }
+            }
+          },
+          {
+            "type": "SectionMetadata",
+            "section": "memory",
+            "startOffset": 39,
+            "size": {
+              "type": "NumberLiteral",
+              "value": 3,
+              "raw": "3",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 39
+                },
+                "end": {
+                  "line": -1,
+                  "column": 40
+                }
+              }
+            },
+            "vectorOfSize": {
+              "type": "NumberLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 40
+                },
+                "end": {
+                  "line": -1,
+                  "column": 41
+                }
+              }
+            }
+          },
+          {
+            "type": "SectionMetadata",
+            "section": "export",
+            "startOffset": 44,
+            "size": {
+              "type": "NumberLiteral",
+              "value": 22,
+              "raw": "22",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 44
+                },
+                "end": {
+                  "line": -1,
+                  "column": 45
+                }
+              }
+            },
+            "vectorOfSize": {
+              "type": "NumberLiteral",
+              "value": 2,
+              "raw": "2",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 45
+                },
+                "end": {
+                  "line": -1,
+                  "column": 46
+                }
+              }
+            }
+          },
+          {
+            "type": "SectionMetadata",
+            "section": "code",
+            "startOffset": 68,
+            "size": {
+              "type": "NumberLiteral",
+              "value": 55,
+              "raw": "55",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 68
+                },
+                "end": {
+                  "line": -1,
+                  "column": 69
+                }
+              }
+            },
+            "vectorOfSize": {
+              "type": "NumberLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": -1,
+                  "column": 69
+                },
+                "end": {
+                  "line": -1,
+                  "column": 70
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

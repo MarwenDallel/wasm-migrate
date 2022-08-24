@@ -1,5 +1,4 @@
 (module
-  (import "env" "sleep" (func $sleep (param i32)))
   (type $t0 (func (param i32) (result i32)))
   (func $fibonacci (type $t0) (param $index i32) (result i32)
     (local $fibn i32) (local $fibn1 i32) (local $fibn2 i32) (local $n i32)
@@ -26,8 +25,6 @@
         i32.const 1
         i32.sub
         local.set $index
-        i32.const 1000
-        call $sleep
         br $L1
       end
     end
