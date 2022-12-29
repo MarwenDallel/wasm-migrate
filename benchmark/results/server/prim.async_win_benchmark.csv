@@ -1,2 +1,0 @@
-Runtime,Program,Command,Start Time,Exit Time,Duration (ns),Peak Physical Memory Usage,Peak Paged Memory Usage,Peak Virtual Memory Usage
-wasmer,prim.async,wasmer run -i prime benchmark/prim.async.wasm 1,2022-12-28 20:00:58.299,2022-12-28 20:00:58.345,46298700,5775360,1896448,4450254848
