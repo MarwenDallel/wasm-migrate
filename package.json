@@ -6,16 +6,15 @@
   "preferGlobal": true,
   "dependencies": {
     "@webassemblyjs/wasm-edit": "1.11.1",
+    "async-mqtt": "^2.6.2",
     "asyncify-wasm": "^1.2.1",
     "binaryen": "^109.0.0",
     "chalk": "^5.0.1",
     "dotenv": "^16.0.1",
-    "js-binary": "^1.2.0",
     "mqtt": "^4.3.7",
     "readline-sync": "^1.4.10",
     "ws": "^8.8.1",
-    "yargs": "^17.5.1",
-    "async-mqtt": "^2.6.2"
+    "yargs": "^17.5.1"
   },
   "bin": "./bin/index.mjs",
   "scripts": {

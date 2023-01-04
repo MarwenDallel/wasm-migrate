@@ -3,7 +3,7 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import mqttCommandIssuer from "../lib/cli/mqttCommandIssuer.mjs";
-import { runPassive } from "../lib/start.mjs";
+import { runPassive } from "../lib/start.timed.mjs";
 
 yargs(hideBin(process.argv))
   .scriptName("wasm-migrate")
