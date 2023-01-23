@@ -6,7 +6,9 @@ const funcArgs = process.argv.slice(4).map((x) => parseInt(x));
 
 let importObject = {
   env: {
-    sleep: (ms) => {},
+    sleep: (ms) => {
+      //setTimeout(() => {});
+    },
   },
 };
 

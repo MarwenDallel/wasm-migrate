@@ -1,5 +1,6 @@
 (module
- (memory (export "primes") 700 700)
+ (memory (export "memory") 700 700)
+ (import "env" "sleep" (func $sleep (param i32)))
  (func $is_prime
   (param $x i32)
   (result i32)
@@ -31,6 +32,7 @@
   $exit
   (loop
     $top
+    (call $sleep (i32.const 1000))
     (local.set $x (i32.add (local.get $x) (i32.const 1)))
     (br_if $exit (i32.ge_s (local.get $primes_count) (local.get $n)))
     (br_if $top (i32.eqz (call $is_prime (local.get $x))))
